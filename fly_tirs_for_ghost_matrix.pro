@@ -229,6 +229,8 @@ biases = fltarr( n_goes_positions )
 openw,2,'L8_bias_goes_resolution.txt'
 goes_lats = !NULL
 goes_lons = !NULL
+goes_bias = !NULL
+
 for i=0, n_goes_positions-1 do begin
   l8_positions = where( sorted_indices[0,i] eq fix( ground_track_samples ) $
 	and sorted_indices[1,i] eq fix( ground_track_lines), n_l8_positions )
@@ -239,6 +241,7 @@ for i=0, n_goes_positions-1 do begin
 
   goes_lats = [goes_lats, l8_lats[index]]
   goes_lons = [goes_lons, l8_lons[index]]
+  goes_bias = [goes_bias, l8_bias[index]]
 
 endfor
 close,2
@@ -408,7 +411,8 @@ wset,1
         xyouts,10,10,ghost_map_filename+' SCA:'+strtrim(string(sca+1),2)+' '+'Detector:'+strtrim(string(detector+1),2) + " "+ "Entries="+strtrim( string(n),2)+" "+"POS="+strtrim(band,2),/device
 	wait,0.125
 
-	band_names[band]='File:'+ghost_map_filename+'; SCA:'+strtrim(string(sca+1),2)+'; '+'Detector:'+strtrim(string(detector+1),2)+"; "+"Entries="+ strtrim(string(n),2)+"; BoresightLat="+strtrim(string(goes_lats[band]),2)+"; BoresightLon="+strtrim(string(goes_lons[band]),2)+"; BoresightLine="+strtrim(string(ground_track_line),2)+"; BoresightSample="+strtrim(string(ground_track_sample),2)
+	band_names[band]='Bias='+strtrim(string(goes_bias[band]),2)+'; SCA:'+SCA_letter+'; Detector='+strtrim(string(detector_number),2)+"; Lat="+strtrim(string(goes_lats[band]),2)+"; Lon="+strtrim(string(goes_lons[band]),2)
+	;band_names[band]='File:'+ghost_map_filename+'; SCA:'+strtrim(string(sca+1),2)+'; '+'Detector:'+strtrim(string(detector+1),2)+"; "+"Entries="+ strtrim(string(n),2)+"; BoresightLat="+strtrim(string(goes_lats[band]),2)+"; BoresightLon="+strtrim(string(goes_lons[band]),2)+"; BoresightLine="+strtrim(string(ground_track_line),2)+"; BoresightSample="+strtrim(string(ground_track_sample),2)
 
 wset,0
 

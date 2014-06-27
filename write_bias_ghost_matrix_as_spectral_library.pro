@@ -53,7 +53,7 @@ pro write_bias_ghost_matrix_as_spectral_library, input_image_filename, detector_
 
   for i = 4, n_bands  - 1 do begin
 
-   header = [header, strmid(band_names[i],48,48) ]
+   header = [header, band_names[i] ]
 
     radiance_data = envi_get_data( dims=dims, fid=input_fid, pos=i)
 
@@ -130,7 +130,6 @@ for j = 0, n_entries-1 do begin
 
 endfor
 
-stop
 ;
 ; Write out the data as a CSV
 ;
