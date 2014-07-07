@@ -40,14 +40,14 @@ pro write_bias_ghost_matrix_as_spectral_library, input_image_filename, detector_
   header = !NULL
   weights = !NULL
 
-;    for j = 1, n_elements( histogram_data ) - 1 do begin
+    for j = 1, n_elements( histogram_data ) - 1 do begin
 
-;       select_points  = where( histogram_band_int eq j )
+       select_points  = where( histogram_band_int eq j )
 
-;       for k = 0, j-1 do begin
-;           weights = [ weights, weight_data[ select_points  ] ]
-;       endfor 
-;    endfor
+       for k = 0, j-1 do begin
+           weights = [ weights, weight_data[ select_points  ] ]
+       endfor 
+    endfor
 
 ;matrix[0,*]=weights
 
@@ -95,6 +95,11 @@ n_samples = (size(transposed_matrix))[1]
 n_lines = (size(transposed_matrix))[2]
 
 file_type="ENVI Spectral Library"
+
+help,weights
+
+envi_write_envi_file, weights, file_type=envi_file_type(file_type), out_name='ghost_weights.sli', interleave=0, ns=n_samples, nl=1, nb=1, spec_names = ['SCA-B Det100'], bname=['SCA-B Det100']
+
 
 envi_write_envi_file, transposed_matrix, file_type=envi_file_type(file_type), out_name='GOES_ghost_matrix.sli', interleave=0, ns=n_samples, nl=n_lines, nb=1, spec_names = header, bname=['SCA-B Det100']
 
